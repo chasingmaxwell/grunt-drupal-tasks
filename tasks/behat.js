@@ -41,7 +41,7 @@ module.exports = function(grunt) {
         }
 
         // Support for global behat flags config.
-        if (!options.flags && config.behat.flags) {
+        if (!options.flags && config.behat && config.behat.flags) {
           options.flags = config.behat.flags;
         }
 
@@ -52,8 +52,8 @@ module.exports = function(grunt) {
 
         grunt.config(['behat', 'site-' + key],
           util._extend({
-            src: './features/*.feature',
-            config: './behat.yml',
+            src: './test/features/*.feature',
+            config: './test/behat.yml',
             maxProcesses: 5,
             bin: './bin/behat',
             debug: true,
@@ -65,7 +65,9 @@ module.exports = function(grunt) {
       }
     }
 
-    grunt.config('help.behat', {
+    grunt.registerTask('test', ['behat']);
+
+    grunt.config('help.test', {
       group: 'Testing & Code Quality',
       description: 'Run the Behat tests included with this project.'
     });
